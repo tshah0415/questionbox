@@ -1,0 +1,38 @@
+    CREATE TABLE `question_boxes` (
+      `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+      `team_id` varchar(20) NOT NULL,
+      `creator_id` varchar(20) NOT NULL,
+      `channel_id` varchar(20) NOT NULL,
+      `date_refreshed` int(10) UNSIGNED NOT NULL,
+      PRIMARY KEY (`id`),
+      KEY `team_and_channel` (`team_id`, `channel_id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+    CREATE TABLE `questions` (
+    	`id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+    	`box_id` int(10) UNSIGNED NOT NULL,
+    	`team_id` varchar(20) NOT NULL,
+    	`text` varchar(255) NOT NULL,
+    	`user_id` varchar(20) NOT NULL,
+    	`date_create` int(10) UNSIGNED NOT NULL,
+    	`vote_count` int(10) UNSIGNED NOT NULL,
+    	PRIMARY KEY (`id`),
+      KEY `team_and_box` (`team_id`, `box_id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+    CREATE TABLE `votes` (
+      `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+      `team_id` varchar(20) NOT NULL,
+      `box_id` int(10) UNSIGNED NOT NULL,
+      `question_id` int(10) UNSIGNED NOT NULL,
+      `user_id` varchar(20) NOT NULL,
+      PRIMARY KEY (`id`),
+      KEY `box_and_user` (`team_id`, `box_id`, `user_id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+    CREATE TABLE `teams` (
+      `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+      `team_id` varchar(20) NOT NULL,
+      `access_token` varchar(255) NOT NULL,
+      PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
