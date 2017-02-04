@@ -61,10 +61,11 @@
 				}
 
 				#
-				# update the text so the buttons go away
+				# update the text so the buttons go away, but also send a message to the channel
 				#
 
-				return send_confirm_action_message('asked', array('question' => $question['text']));
+				send_action_complete_message($team, $channel_id, $asker, 'ask', ['question' => $question]);
+				send_confirm_action_message('asked');
 			}
 			if ($value === 'no_ask') {
 				return_text("OK, I didn't add your question.");

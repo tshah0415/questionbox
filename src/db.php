@@ -125,7 +125,6 @@
     # either update an existing question with date_create, possibly user id, or add a new, non-visible one
     function ask_question($team_id, $box_id, $text, $user_id="", $date_create=0, $question_id=0) {
         $team_id = mysql_escape_string($team_id);
-        $channel_id = mysql_escape_string($channel_id);
         $text = mysql_escape_string($text);
         if ($user_id) $user_id = mysql_escape_string($user_id);
 

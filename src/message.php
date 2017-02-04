@@ -46,6 +46,21 @@
 			}
 			$args['text'] = $text;
 			$args['attachments'] = json_encode($attachments);
+
+		} else if ($type == 'ask'){
+
+			$question = $extras['question'];
+			$q_text = "{$question['text']}";
+			$attachments = array();
+
+			$asker = $user_id ? "<@$user_id>" : "Someone";
+			$text = "$asker just asked a new question, shown below! Type `/questionbox show` to vote up this question or see the others!";
+			$attachments[] = array(
+				'text'		=> $q_text,
+				'fallback'	=> $q_text,
+			);
+			$args['text'] = $text;
+			$args['attachments'] = json_encode($attachments);
 		}
 
 		$slack = new Slack($team['access_token']);
@@ -60,7 +75,7 @@
 		);
 
 		if ($type === 'ask') {
-			$text = "Ready to ask this question? You can do so anonymously, if you wish.";
+			$text = "Ready to ask this question? You can do so anonymously, if you wish.\nIt will be shown in the channel when you ask it.";
 			$confirm_anon_button = array(
 				'name'	=> 'ask',
 				'text'  => 'Ask anonymously',
@@ -193,8 +208,6 @@
 
 		} else if ($type == 'asked') {
 			$text = "Great question! You rule! Added to the question box!";
-			$attachment = array('text' => $extras['question']);
-			$args['attachments'] = array($attachment);
 		}
 
 		return_text($text, $args);
